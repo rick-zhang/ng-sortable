@@ -22,7 +22,7 @@ angular.module('demoApp', [
     $routeProvider.when('/grid', {templateUrl: 'views/grid.html', controller: 'GridController'});
     $routeProvider.when('/block', {templateUrl: 'views/block.html', controller: 'BlockController'});
     $routeProvider.when('/scrollable', {templateUrl: 'views/scrollable.html', controller: 'ScrollableController'});
-    $routeProvider.when('/table', {templateUrl: 'views/table.html', controller: 'TableController'});
+    $routeProvider.when('/table', {templateUrl: 'views/table.html', controller: 'MyTableController'});
     //$routeProvider.otherwise({redirectTo: '/'});
   }]).
   controller('DemoController', ['$scope', '$location', function ($scope, $location) {

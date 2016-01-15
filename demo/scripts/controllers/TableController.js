@@ -3,18 +3,22 @@
 
 'use strict';
 
-angular.module('demoApp').controller('TableController', ['$scope', function ($scope) {
+angular.module('demoApp').controller('MyTableController', ['$scope', function ($scope) {
 
     var i;
     $scope.itemsList = {
         items: []
     };
 
-    for (i = 0; i <= 5; i += 1) {
+    for (i = 0; i <= 2; i += 1) {
         $scope.itemsList.items.push({'id': i, 'label': 'Item A_' + i});
     }
+    //$scope.sortableOptions = {
+    //    containment: '#table-container',
+    //    containerPositioning: 'relative'
+    //};
+
     $scope.sortableOptions = {
-        containment: '#table-container',
-        containerPositioning: 'relative'
+        containment: '#my-table-container'
     };
 }]);

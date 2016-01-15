@@ -52,7 +52,12 @@
           var sortableController = ctrl[0];
           var ngModelController = ctrl[1];
           if (sortableConfig.itemClass) {
-            element.addClass(sortableConfig.itemClass);
+            //Rick: if element is table TR add table-row style
+            if(element.prop('tagName') == 'TR'){
+              element.addClass(sortableConfig.itemClassTableRow);
+            }else{
+              element.addClass(sortableConfig.itemClass);
+            }
           }
           scope.sortableScope = sortableController.scope;
           if (ngModelController) {

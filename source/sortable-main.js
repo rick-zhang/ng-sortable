@@ -31,6 +31,7 @@
   angular.module('as.sortable', [])
     .constant('sortableConfig', {
       itemClass: 'as-sortable-item',
+      itemClassTableRow: 'as-sortable-item-table-row',//Rick: add new table row style for html table
       handleClass: 'as-sortable-item-handle',
       placeHolderClass: 'as-sortable-placeholder',
       dragClass: 'as-sortable-drag',

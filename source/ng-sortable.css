@@ -6,6 +6,10 @@
     display: block;
 }
 
+.as-sortable-item-table-row {
+    display: table-row;
+}
+
 .as-sortable-item {
     -ms-touch-action: none;
     touch-action: none;
