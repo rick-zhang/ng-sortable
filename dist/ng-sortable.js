@@ -749,9 +749,8 @@
                         dragItemInfo = $helper.dragItem(scope);
                         tagName = scope.itemScope.element.prop('tagName');
 
-                        //dragElement = angular.element($document[0].createElement(scope.sortableScope.element.prop('tagName')))
-                        dragElement = angular.element($document[0].createElement(scope.itemScope.element.prop('tagName')))
-                            .addClass(scope.sortableScope.element.attr('class')).addClass(sortableConfig.dragClass);
+                        //Rick: clone original element as the drag element and add drag style
+                        dragElement = scope.itemScope.element.clone().addClass(scope.sortableScope.element.attr('class')).addClass(sortableConfig.dragClass);
                         dragElement.css('width', $helper.width(scope.itemScope.element) + 'px');
                         dragElement.css('height', $helper.height(scope.itemScope.element) + 'px');
 
@@ -782,13 +781,17 @@
                         }
                         else {
                             // Not cloning, so use the original element.
-                            var children = scope.itemScope.element.children();
+                            // Rick: fix wrong width issue when no specific width style
+                            var originalChildren = scope.itemScope.element.children();
+                            var children = dragElement.children();
                             for(var i = 0; i < children.length; i++) {
                                 var child = angular.element(children[i]);
-                                child.css('width',$helper.width(child) + 'px');
-                                child.css('height',$helper.height(child) + 'px');
+                                var originalChild = angular.element(originalChildren[i]);
+                                child.css('width',$helper.width(originalChild) + 'px');
+                                child.css('height',$helper.height(originalChild) + 'px');
                             }
-                            dragElement.append(scope.itemScope.element);
+                            // Rick: hide original element. NOTE: can not remove it as we need to restore it when drag end.
+                            scope.itemScope.element.css('display','none')
                         }
 
                         containment.append(dragElement);
@@ -1015,6 +1018,13 @@
                      */
 
                     function rollbackDragChanges() {
+                        //Rick: restore display style from 'none' to 'block' or 'table-row' in case it is a table row
+                        if(scope.itemScope.element.prop('tagName') ==='TR'){
+                            scope.itemScope.element.css('display','table-row');
+                        }else{
+                            scope.itemScope.element.css('display','block');
+                        }
+
                         placeElement.replaceWith(scope.itemScope.element);
                         placeHolder.remove();
                         dragElement.remove();
