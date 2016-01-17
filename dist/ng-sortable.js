@@ -782,6 +782,12 @@
                         }
                         else {
                             // Not cloning, so use the original element.
+                            var children = scope.itemScope.element.children();
+                            for(var i = 0; i < children.length; i++) {
+                                var child = angular.element(children[i]);
+                                child.css('width',$helper.width(child) + 'px');
+                                child.css('height',$helper.height(child) + 'px');
+                            }
                             dragElement.append(scope.itemScope.element);
                         }
 
@@ -1182,7 +1188,7 @@
           var ngModelController = ctrl[1];
           if (sortableConfig.itemClass) {
             //Rick: if element is table TR add table-row style
-            if(element.prop('tagName') == 'TR'){
+            if(element.prop('tagName') === 'TR'){
               element.addClass(sortableConfig.itemClassTableRow);
             }else{
               element.addClass(sortableConfig.itemClass);

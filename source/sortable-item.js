@@ -53,7 +53,7 @@
           var ngModelController = ctrl[1];
           if (sortableConfig.itemClass) {
             //Rick: if element is table TR add table-row style
-            if(element.prop('tagName') == 'TR'){
+            if(element.prop('tagName') === 'TR'){
               element.addClass(sortableConfig.itemClassTableRow);
             }else{
               element.addClass(sortableConfig.itemClass);

@@ -1,16 +1,16 @@
-<div id="my-table-container" ng-controller="MyTableController">
-    <table class="" style="border: solid 1px red">
+<div ng-controller="MyTableController">
+    <table class="table table-bordered" style="border: solid 1px red">
         <thead>
         <tr>
             <th>ID</th>
             <th>优先级</th>
         </tr>
         </thead>
-        <tbody data-ng-model="itemsList.items" as-sortable="sortableOptions">
+        <tbody id="my-table-container" data-ng-model="itemsList.items" as-sortable="sortableOptions">
         <tr ng-repeat="item in itemsList.items" as-sortable-item>
-            <td style="height: 30px; width: 100px; background: red">{{item.id}}</td>
-            <td as-sortable-item-handle>
-                <div style="height: 30px; width: 400px; background: green">{{item.label}}</div>
+            <td as-sortable-item-handle style="height: 30px; background: red">{{item.id}}</td>
+            <td as-sortable-item-handle style="height: 30px; background: green">
+                {{item.label}}
             </td>
         </tr>
         </tbody>

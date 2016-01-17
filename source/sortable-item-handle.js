@@ -231,6 +231,13 @@
                         }
                         else {
                             // Not cloning, so use the original element.
+                            // Rick: fix wrong width issue when no specific width style
+                            var children = scope.itemScope.element.children();
+                            for(var i = 0; i < children.length; i++) {
+                                var child = angular.element(children[i]);
+                                child.css('width',$helper.width(child) + 'px');
+                                child.css('height',$helper.height(child) + 'px');
+                            }
                             dragElement.append(scope.itemScope.element);
                         }
 
