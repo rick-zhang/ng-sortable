@@ -658,11 +658,20 @@
                             // 2. append blank child node to tr to form a complete row
                             if (placeHolder.prop('tagName') == 'TR') {
                                 placeHolder.css({display: 'table-row'});
-                                var trChildren = itemScope.element.children();
-                                for (var i = 0; i < trChildren.length; i++) {
-                                    placeHolder.append(angular.element($document[0].createElement(trChildren[0].nodeName)));
+                                // Rick: fix placeholder children element width. When using bootstrap fluid layout tables, this
+                                // is necessary, otherwise table column widths might change when dragging.
+                                var originalChildren = itemScope.element.children();
+                                for(var i = 0; i < originalChildren.length; i++) {
+                                    var child = angular.element($document[0].createElement(originalChildren[0].nodeName));
+                                    var originalChild = angular.element(originalChildren[i]);
+                                    child.css('width',$helper.width(originalChild) + 'px');
+                                    child.css('height',$helper.height(originalChild) + 'px');
+                                    placeHolder.append(child);
                                 }
                             }
+
+
+
                             return placeHolder;
                         }
                     };

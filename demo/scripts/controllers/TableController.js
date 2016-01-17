@@ -11,7 +11,11 @@ angular.module('demoApp').controller('MyTableController', ['$scope', function ($
     };
 
     for (i = 0; i <= 2; i += 1) {
-        $scope.itemsList.items.push({'id': i, 'label': 'Item A_' + i});
+        var content = '';
+        if(i == 1){
+            content = 'okokokokokokokokokokokokokok';
+        }
+        $scope.itemsList.items.push({'id': i, 'label': 'Item A_' + content});
     }
     //$scope.sortableOptions = {
     //    containment: '#table-container',
