@@ -51,6 +51,7 @@
                         dragItemInfo, //drag item data.
                         containment,//the drag container.
                         containerPositioning, // absolute or relative positioning.
+                        bootStrapColumnsBugFix,//Rick: use with containerPositioning to fix position issue when using bootstrap columns
                         dragListen,// drag listen event.
                         scrollableContainer, //the scrollable container
                         dragStart,// drag start event.
@@ -110,15 +111,14 @@
                                 // Rick: fix placeholder children element width. When using bootstrap fluid layout tables, this
                                 // is necessary, otherwise table column widths might change when dragging.
                                 var originalChildren = itemScope.element.children();
-                                for(var i = 0; i < originalChildren.length; i++) {
+                                for (var i = 0; i < originalChildren.length; i++) {
                                     var child = angular.element($document[0].createElement(originalChildren[0].nodeName));
                                     var originalChild = angular.element(originalChildren[i]);
-                                    child.css('width',$helper.width(originalChild) + 'px');
-                                    child.css('height',$helper.height(originalChild) + 'px');
+                                    child.css('width', $helper.width(originalChild) + 'px');
+                                    child.css('height', $helper.height(originalChild) + 'px');
                                     placeHolder.append(child);
                                 }
                             }
-
 
 
                             return placeHolder;
@@ -204,6 +204,8 @@
                         // container positioning
                         containerPositioning = scope.sortableScope.options.containerPositioning || 'absolute';
 
+                        bootStrapColumnsBugFix = scope.sortableScope.options.bootStrapColumnsBugFix || 'no';
+
                         dragItemInfo = $helper.dragItem(scope);
                         tagName = scope.itemScope.element.prop('tagName');
 
@@ -223,7 +225,7 @@
                         }
 
                         itemPosition = $helper.positionStarted(eventObj, scope.itemScope.element, scrollableContainer);
-                        $helper.movePosition(eventObj, dragElement, itemPosition, containment, containerPositioning, scrollableContainer);
+                        $helper.movePosition(eventObj, dragElement, itemPosition, containment, containerPositioning, bootStrapColumnsBugFix, scrollableContainer);
 
                         //fill the immediate vacuum.
                         if (!scope.itemScope.sortableScope.options.clone) {
@@ -242,14 +244,14 @@
                             // Rick: fix wrong width issue when no specific width style
                             var originalChildren = scope.itemScope.element.children();
                             var children = dragElement.children();
-                            for(var i = 0; i < children.length; i++) {
+                            for (var i = 0; i < children.length; i++) {
                                 var child = angular.element(children[i]);
                                 var originalChild = angular.element(originalChildren[i]);
-                                child.css('width',$helper.width(originalChild) + 'px');
-                                child.css('height',$helper.height(originalChild) + 'px');
+                                child.css('width', $helper.width(originalChild) + 'px');
+                                child.css('height', $helper.height(originalChild) + 'px');
                             }
                             // Rick: hide original element. NOTE: can not remove it as we need to restore it when drag end.
-                            scope.itemScope.element.css('display','none')
+                            scope.itemScope.element.css('display', 'none')
                         }
 
                         containment.append(dragElement);
@@ -369,7 +371,7 @@
                             dragElement.addClass(sortableConfig.hiddenClass);
                             dragElement.removeClass(sortableConfig.hiddenClass);
 
-                            $helper.movePosition(eventObj, dragElement, itemPosition, containment, containerPositioning, scrollableContainer);
+                            $helper.movePosition(eventObj, dragElement, itemPosition, containment, containerPositioning, bootStrapColumnsBugFix, scrollableContainer);
 
                             //Set Class as dragging starts
                             dragElement.addClass(sortableConfig.dragging);
@@ -477,10 +479,10 @@
 
                     function rollbackDragChanges() {
                         //Rick: restore display style from 'none' to 'block' or 'table-row' in case it is a table row
-                        if(scope.itemScope.element.prop('tagName') ==='TR'){
-                            scope.itemScope.element.css('display','table-row');
-                        }else{
-                            scope.itemScope.element.css('display','block');
+                        if (scope.itemScope.element.prop('tagName') === 'TR') {
+                            scope.itemScope.element.css('display', 'table-row');
+                        } else {
+                            scope.itemScope.element.css('display', 'block');
                         }
 
                         placeElement.replaceWith(scope.itemScope.element);

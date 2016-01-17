@@ -23,6 +23,8 @@ angular.module('demoApp').controller('MyTableController', ['$scope', function ($
     //};
 
     $scope.sortableOptions = {
-        containment: '#my-table-container'
+        containment: '#my-table-container',
+        containerPositioning: 'relative',
+        bootStrapColumnsBugFix: 'yes'
     };
 }]);

@@ -166,7 +166,7 @@
          * @param containerPositioning - absolute or relative positioning.
          * @param {Object} [scrollableContainer] (optional) Scrollable container object
          */
-        movePosition: function (event, element, pos, container, containerPositioning, scrollableContainer) {
+        movePosition: function (event, element, pos, container, containerPositioning, bootStrapColumnsBugFix, scrollableContainer) {
           var bounds;
           var useRelative = (containerPositioning === 'relative');
 
@@ -198,10 +198,15 @@
             }
           }
 
+          //Rick: fix position bugs when using bootstrap columns layout
+          //TODO: find out why this offset appears
+          var bootstrapBugFixOffsetX = bootStrapColumnsBugFix === 'yes' ? 16 : 0
+          var bootstrapBugFixOffsetY = bootStrapColumnsBugFix === 'yes' ? 38 : 0
           element.css({
-            'left': element.x + 'px',
-            'top': element.y + 'px'
+            'left': element.x +  bootstrapBugFixOffsetX + 'px',
+            'top': element.y + bootstrapBugFixOffsetY + 'px'
           });
+
 
           this.calculatePosition(pos, event);
         },
